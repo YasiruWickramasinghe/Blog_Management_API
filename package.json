@@ -2,7 +2,7 @@
   "name": "blog_management_api",
   "version": "1.0.0",
   "description": "Blog Management API is a powerful and efficient RESTful API for managing blogs. Built with Express, Node.js, and MongoDB, it enables seamless creation, retrieval, update, and deletion of blog posts. Enhance your blogging experience with this scalable and feature-rich API solution.",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
@@ -21,6 +21,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "mongodb": "^5.6.0",
     "mongoose": "^7.3.1",
     "nodemon": "^2.0.22"
   }
