@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userRoutes = require('./src/routes/userRoutes');
+const blogRoutes = require('./src/routes/blogRoutes');
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Routes
 app.use('/users', userRoutes);
+app.use('/blogs', blogRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
