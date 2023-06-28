@@ -1,4 +1,3 @@
-// models/blogModel.js
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   // ... add other fields as needed
-});
+}, { timestamps: true });
 
 const Blog = mongoose.model('Blog', blogSchema);
 

@@ -1,7 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const userRoutes = require('./src/routes/userRoutes');
+const connectDB = require('./src/config/db');
+const errorMiddleware = require('./src/middleware/errorMiddleware');
 const blogRoutes = require('./src/routes/blogRoutes');
 
 dotenv.config();
@@ -12,26 +12,13 @@ const app = express();
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-  });
+connectDB();
 
 // Routes
-app.use('/users', userRoutes);
 app.use('/blogs', blogRoutes);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
+app.use(errorMiddleware);
 
 // Start the server
 const port = process.env.PORT || 3000;

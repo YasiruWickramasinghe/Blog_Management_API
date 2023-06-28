@@ -1,11 +1,17 @@
-// routes/blogRoutes.js
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { getBlogs, getBlogById, createBlog, updateBlog, deleteBlog } = require('../controllers/blogController');
+const {
+  getBlogs,
+  getBlogById,
+  createBlog,
+  updateBlog,
+  deleteBlog,
+  searchBlogs,
+} = require('../controllers/blogController');
 
 const router = express.Router();
 
-// Get all blogs
+// Get all blogs with pagination, search, sorting, and filtering
 router.get('/', getBlogs);
 
 // Get blog by ID
@@ -16,8 +22,7 @@ router.post(
   '/',
   [
     body('name').notEmpty().withMessage('Name is required'),
-    body('author')
-      .notEmpty().withMessage('Email is required'),
+    body('author').notEmpty().withMessage('Author is required'),
     // ... add other validation rules as needed
   ],
   (req, res, next) => {
@@ -35,8 +40,7 @@ router.put(
   '/:id',
   [
     body('name').notEmpty().withMessage('Name is required'),
-    body('author')
-      .notEmpty().withMessage('Author is required')
+    body('author').notEmpty().withMessage('Author is required'),
     // ... add other validation rules as needed
   ],
   (req, res, next) => {
@@ -51,5 +55,8 @@ router.put(
 
 // Delete blog by ID
 router.delete('/:id', deleteBlog);
+
+// Search blogs by name
+router.get('/search/name', searchBlogs);
 
 module.exports = router;

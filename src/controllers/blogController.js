@@ -1,11 +1,42 @@
-// controllers/blogController.js
 const Blog = require('../models/blogModel');
 
-// Get all blogs
+// Get all blogs with pagination, search, sorting, and filtering
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find();
-    res.json(blogs);
+    const { page = 1, limit = 10, sort, filter, search } = req.query;
+    const query = {};
+
+    // Apply filtering
+    if (filter) {
+      const filters = JSON.parse(filter);
+      Object.assign(query, filters);
+    }
+
+    // Apply search
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { author: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    // Get total count for pagination
+    const totalCount = await Blog.countDocuments(query);
+
+    // Apply sorting
+    const sortOptions = sort ? JSON.parse(sort) : { createdAt: -1 };
+
+    const blogs = await Blog.find(query)
+      .sort(sortOptions)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    res.json({
+      data: blogs,
+      totalCount,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalCount / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -65,4 +96,21 @@ const deleteBlog = async (req, res) => {
   }
 };
 
-module.exports = { getBlogs, getBlogById, createBlog, updateBlog, deleteBlog };
+// Search blogs by name and author
+const searchBlogs = async (req, res) => {
+  const { searchQuery } = req.query;
+
+  try {
+    const blogs = await Blog.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        { author: { $regex: searchQuery, $options: 'i' } }
+      ]
+    });
+    res.json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = { getBlogs, getBlogById, createBlog, updateBlog, deleteBlog, searchBlogs };
