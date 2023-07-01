@@ -1,16 +1,8 @@
-# Blog_Management_Client
-
-Empower your blog with React, Redux, and more. Create a seamless front-end interface that enriches your blogging experience Integrate effortlessly with the powerful Blog Management API for efficient post management and a feature-rich solution.
-
-# Blog_Management_Server
+# Blog_Management_API
 
 Blog Management API is a powerful and efficient RESTful API for managing blogs. Built with Express, Node.js, and MongoDB, it enables seamless creation, retrieval, update, and deletion of blog posts. Enhance your blogging experience with this scalable and feature-rich API solution.
 
 ## API Documentation
-
-### Base URL
-
-The base URL for all API endpoints is: `http://localhost:3000`.
 
 ### Endpoints
 
@@ -72,20 +64,24 @@ The base URL for all API endpoints is: `http://localhost:3000`.
   - Parameters:
     - searchQuery: Query string to search for.
   - Example: `GET /blogs/search/name?searchQuery=example`
-  
+
+### Base URL
+
+  The base URL for all API endpoints is: `http://localhost:3000`.
 
 ## Environment Variables
 
-The following environment variables are used in the project:
+  The following environment variables are used in the project:
 
-- `MONGO_URI`: MongoDB connection URI.
-- `PORT`: Port number for the server (default: 3000).
+  - `MONGO_URI`: MongoDB connection URI.
+  - `PORT`: Port number for the server (default: 3000).
 
 ## Getting Started
 
-1. Clone the repository.
-2. Install the dependencies: `npm install`.
-3. Set up the environment variables by creating a `.env` file (see the example `.env.example` file).
-4. Start the server: `npm start`.
+  1. Clone the repository.
+  2. Install the dependencies: `npm install`.
+  3. Set up the environment variables by creating a `.env` file (see the example `.env.example` file).
+  4. Start the server: `npm start`.
+  
 
 
